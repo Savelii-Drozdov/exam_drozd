@@ -197,14 +197,16 @@ document.addEventListener('DOMContentLoaded', function () {
             langGit.textContent = gid.language;
             workGit.textContent = gid.workExperience;
             moneyGit.textContent = gid.pricePerHour;
-            
             selectButtonGit.textContent = 'Выбрать';
-            selectButtonGit.classList.add('btn', 'btn-secondary', 'selectGitBtn');
+            selectButtonGit.classList.add('btn', 'databutton', 'btn-secondary');
+            selectButtonGit.setAttribute('data-price-per-hour', gid.pricePerHour);
+            selectButtonGit.setAttribute('data-guide-id', gid.id);
+            selectButtonGit.setAttribute('data-route-id', routeId);
             selectButtonGit.addEventListener('click', function () {
                 document.getElementById('nameRoute').innerText = `"${gid.name}"`;
                 document.getElementById('nameRoute').innerText = `"${nameRoute}"`;
                 
-                row.classList.toggle('selected');
+                selectButtonGit.classList.toggle('selectedG');
                 buttonForm.click();
             });
 
@@ -217,11 +219,120 @@ document.addEventListener('DOMContentLoaded', function () {
             row.appendChild(buttonGit)
 
             gidTableBody.appendChild(row);
-        })
+        });
+    };
+
+
+
+
+
+
+    document.getElementById('calculateCost').addEventListener('click', function () {
+        const hoursNumber = parseInt(document.getElementById('duration').value);
+        console.log(hoursNumber)
+        
+        const tourDate = new Date(document.getElementById('tourDate').value);
+        console.log(tourDate)
+        const startTime = document.getElementById('startTime').value;
+        console.log(startTime)
+        
+        
+
+        const isThisDayOff = calculateIsThisDayOff(tourDate);
+        console.log(isThisDayOff)
+
+        const isItMorning = calculateIsItMorning(startTime);
+        console.log(isItMorning)
+
+        const isItEvening = calculateIsItEvening(startTime);
+        console.log(isItEvening)
 
 
         
-    }
+        let guidePricePerHour = parseFloat(document.querySelector('.btn.selectedG').getAttribute('data-price-per-hour'));
+        console.log(guidePricePerHour)
+        if (isNaN(guidePricePerHour)) {
+            guidePricePerHour = 1400;
+        }
+        const numberOfVisitors = parseInt(document.getElementById('groupSize').value);
+        console.log(numberOfVisitors);
 
+        const totalPrice = calculatePrice(
+            guidePricePerHour,
+            hoursNumber,
+            isThisDayOff,
+            isItMorning,
+            isItEvening,
+            numberOfVisitors
+        );
+
+
+        document.getElementById('totalCost').value = totalPrice.toFixed(2);
+        const requestBody = {
+            guide_id: 2, // Пример значения
+            route_id: 20, // Пример значения
+            date: '2024-01-15', // Пример значения в формате YYYY-MM-DD
+            time: '14:30', // Пример значения в формате HH:MM
+            duration: 2, // Пример значения от 1 до 3
+            persons: 10, // Пример значения от 1 до 20
+            price: 1500, // Пример значения
+            optionFirst: 1, // Пример значения, передаваемого как 0 или 1 (ноль или единица)
+            optionSecond: 0, // Пример значения, передаваемого как 0 или 1 (ноль или единица)
+            student_id: 789 // Пример значения
+            // Добавьте другие значения, если необходимо
+        };
+
+    });
+
+
+    function calculatePrice(guideServiceCost, hoursNumber, isThisDayOff, isItMorning, isItEvening, numberOfVisitors) {
+        let totalPrice = guideServiceCost * hoursNumber * isThisDayOff + isItMorning + isItEvening;
+
+        if (numberOfVisitors > 0 && numberOfVisitors <= 5) {
+            totalPrice += 0; 
+        } else if (numberOfVisitors > 5 && numberOfVisitors <= 10) {
+            totalPrice += 1000; 
+        } else if (numberOfVisitors > 10 && numberOfVisitors <= 20) {
+            totalPrice += 1500;
+        }
+
+        return totalPrice;
+    };
+
+    function calculateIsThisDayOff(date) {
+        const dayOfWeek = date.getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            return 1.5; 
+        } else {
+            return 1; 
+        }
+    };
+
+    
+    function calculateIsItMorning(time) {
+        const startTime = new Date(`05/05/2024 ${time}`);
+
+        const morningStartTime = new Date(`05/05/2024 09:00`);
+        const morningEndTime = new Date(`05/05/2024 12:00`);
+
+        if (startTime >= morningStartTime && startTime <= morningEndTime) {
+            return 400;
+        } else {
+            return 0;
+        }
+    };
+
+    function calculateIsItEvening(time) {
+        const startTime = new Date(`05/05/2024 ${time}`); 
+
+        const eveningStartTime = new Date(`05/05/2024 20:00`);
+        const eveningEndTime = new Date(`05/05/2024 23:00`);
+
+        if (startTime >= eveningStartTime && startTime <= eveningEndTime) {
+            return 1000; 
+        } else {
+            return 0; 
+        }
+    };
 
 });

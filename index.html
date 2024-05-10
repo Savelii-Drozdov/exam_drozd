@@ -73,13 +73,13 @@
                         </div>
                 </div>
 
-                <div class="filter">
+                <!-- <div class="filter">
                     <label for="search">Поиск на карте</label> 
                     <input type="search" id="search" placeholder="Название маршрута" >
                 </div>
                 <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2288.3788758718315!2d37.54464386242067!3d55.83388463804159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b537ce1d1f695d%3A0xf9802f9d103bbf32!2z0KPRh9C10LHQvdGL0Lkg0LrQvtGA0L_Rg9GBINCS0YvRgdGI0LXQuSDRiNC60L7Qu9GLINC_0LXRh9Cw0YLQuCDQuCDQvNC10LTQuNCw0LjQvdC00YPRgdGC0YDQuNC4INCc0L7RgdC60L7QstGB0LrQvtCz0L4g0L_QvtC70LjRgtC10YXQvdC40YfQtdGB0LrQvtCz0L4g0YPQvdC40LLQtdGA0YHQuNGC0LXRgtCw!5e0!3m2!1sru!2sru!4v1714648139457!5m2!1sru!2sru"
-                    height="450" width="100%" style=" justify-content: center;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
+                    height="450" width="100%" style=" justify-content: center;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+                    <!-- </div> -->
                 
                     
                        
@@ -118,7 +118,7 @@
                         <table class="table table-responsive" id="routesTable">
                           <th scope="col">Название</th>
                           <th scope="col">Описание</th>
-                          <th scope="col">Достопримечательность</th>
+                          <th scope="col">Памятники культуры</th>
                           <th scope="col"></th>
                      
                           <tbody id="routesTableBody">
@@ -184,14 +184,14 @@
                                     <label for="attachment" class="form__label">Дата:</label>
                                     <input
                                       type ="date"
-                                      id="date"
+                                      id="tourDate"
                                       name="date"
                                       class="form__input"
                                     >
                                     <label for="attachment" class="form__label">Время начала:</label>
                                     <input
                                       type ="time"
-                                      id="time"
+                                      id="startTime"
                                       name="time"
                                       class="form__input"
                                     >
@@ -209,7 +209,7 @@
                                     <label for="number" class="form__label">Количество человек:</label>
                                     <input
                                       placeholder="Количество участников"
-                                      id="number"
+                                      id="groupSize"
                                       name="number"
                                       rows="1"
                                       class="form__input"
@@ -222,8 +222,8 @@
                                         type="checkbox"
                                         name="op1"
                                         class="form__checkbox"
-                                        <!-- required -->
-                                      > 
+                                         required -->
+                                      
                                       <a>Выбрать опцию</a>
 
                                       <label class="form__consent">Сурдопереводчик</label>
